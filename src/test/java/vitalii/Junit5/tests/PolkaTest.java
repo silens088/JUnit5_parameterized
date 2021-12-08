@@ -1,5 +1,6 @@
 package vitalii.Junit5.tests;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
@@ -8,13 +9,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.*;
+
+import java.util.stream.Stream;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 import static vitalii.Junit5.tests.DataTests.bookAuthor;
 import static vitalii.Junit5.tests.DataTests.bookName;
 
@@ -84,6 +84,27 @@ public class PolkaTest {
         $(".uO74Z h1").shouldHave(text(selectBook)).shouldBe(visible);
     }
 
-//    @Tag("lvl_5_HARD")
+
 //    @MethodSource - самый мощный инструмент. Заменяет все предыдущие
+
+    static Stream<Arguments> testSearchBook() {
+        return Stream.of(
+                Arguments.of("Анна Каренина", "Лев Толстой"),
+                Arguments.of("Война и мир", "Лев Толстой"),
+                Arguments.of("Вишнёвый сад", "Антон Чехов")
+        );
+    }
+
+    @Tag("lvl_5_HARD")
+    @MethodSource("testSearchBook")
+    @ParameterizedTest(name = "Search {0} book by {1}")
+    void testSearchBook(String selectBook, String selectAuthor) {
+        open("https://polka.academy/");
+        $(".wCizZ svg").click();
+        $(".AKPsr").setValue(selectBook).pressEnter();
+        $("#searchInput input").shouldHave(value(selectBook)).shouldBe(visible);
+        $(".mkXom").click();
+        $("._1Vhx8").shouldHave(text(selectAuthor)).shouldBe(visible);
+        $(".uO74Z h1").shouldHave(text(selectBook)).shouldBe(visible);
+    }
 }
