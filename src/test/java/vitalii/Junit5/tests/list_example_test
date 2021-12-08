@@ -1,0 +1,39 @@
+
+линк для поиска: https://github.com/qa-guru/qa_guru_9_8_files/blob/master/src/test/java/guru/qa/YaTest.java
+
+public class YaTest {
+
+    private static List<String> arguments = List.of("лаконичные и стабильные UI тесты на Java");
+
+    @DisplayName("Поиск в ya.ru слова Selenide")
+    @Tag("blocker")
+    @Test
+    void selenideSearchTest() {
+        open("https://ya.ru");
+        $("#text").setValue("Selenide");
+        $("button[type='submit']").click();
+        $$("li.serp-item")
+                .find(Condition.text("лаконичные и стабильные UI тесты на Java"))
+                .shouldBe(Condition.visible);
+    }
+
+    static Stream<Arguments> commonYaSearchTest() {
+        return Stream.of(
+                Arguments.of("Selenide"),
+                Arguments.of("")
+        );
+    }
+
+    @MethodSource
+    @Tag("blocker")
+    @DisplayName("Поиск в яндексе")
+    @ParameterizedTest(name = "Поиск в ya.ru слова {0} и проверка отображения текста {1}")
+    void commonYaSearchTest(String searchQuery, List<String> expectedResult) {
+        open("https://ya.ru");
+        $("#text").setValue(searchQuery);
+        $("button[type='submit']").click();
+        $$("li.serp-item")
+                .find(Condition.text(expectedResult.get(0)))
+                .shouldBe(Condition.visible);
+    }
+}
