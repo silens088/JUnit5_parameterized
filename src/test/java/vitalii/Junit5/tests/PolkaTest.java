@@ -13,11 +13,13 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
-import static vitalii.Junit5.tests.DataTests.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
+import static vitalii.Junit5.tests.DataTests.bookAuthor;
+import static vitalii.Junit5.tests.DataTests.bookName;
 
-    @Owner("velichkovv")
-    @Feature("параметризованные тесты")
+@Owner("velichkovv")
+@Feature("параметризованные тесты")
 
 public class PolkaTest {
 
@@ -41,7 +43,7 @@ public class PolkaTest {
     }
 
     @Tag("lvl_2")
-    @ValueSource(strings = {"Анна Каренина", "Война и мир", "Вишнёвый сад"} )
+    @ValueSource(strings = {"Анна Каренина", "Война и мир", "Вишнёвый сад"})
     @ParameterizedTest(name = "Search {0} book")
     public void searchBookTest(String selectBook) {
         open("https://polka.academy/");
@@ -82,7 +84,6 @@ public class PolkaTest {
         $(".uO74Z h1").shouldHave(text(selectBook)).shouldBe(visible);
     }
 
-
-
-
+//    @Tag("lvl_5_HARD")
+//    @MethodSource - самый мощный инструмент. Заменяет все предыдущие
 }
