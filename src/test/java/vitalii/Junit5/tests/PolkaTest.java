@@ -1,6 +1,5 @@
 package vitalii.Junit5.tests;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
@@ -14,7 +13,8 @@ import org.junit.jupiter.params.provider.*;
 import java.util.stream.Stream;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 import static vitalii.Junit5.tests.DataTests.bookAuthor;
 import static vitalii.Junit5.tests.DataTests.bookName;
 
