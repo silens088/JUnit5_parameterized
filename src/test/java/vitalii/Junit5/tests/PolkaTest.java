@@ -18,7 +18,7 @@ import static vitalii.Junit5.tests.DataTests.bookAuthor;
 import static vitalii.Junit5.tests.DataTests.bookName;
 
 @Owner("velichkovv")
-@Feature("параметризованные тесты")
+@Feature("Parameterized Test")
 @Description("тесты для страницы https://polka.academy/")
 
 public class PolkaTest extends TestBase {
